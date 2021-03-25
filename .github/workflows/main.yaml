@@ -1,6 +1,6 @@
 name: Api Mongoose v1  #Nombre de Workflow
 
-on: [push] #Cuando se ejecuta el wokflow
+on: [push,pull_request] #Cuando se ejecuta el wokflow
 
 jobs:
 #Stages -> Procesos de CI que realiza el workflow
