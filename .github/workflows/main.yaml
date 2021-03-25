@@ -11,7 +11,7 @@ jobs:
     #Pasos a realizar para que build funcione
     - uses: actions/checkout@v2 #Version de gitgub actios que se ocupa
     - name: Build image Docker  #Nombre del paso en que estas
-    - run: docker build . --file Dockerfile --tag api-mongoose-v1 #Ejecuta el comando especificado
+      run: docker build . --file Dockerfile --tag api-mongoose-v1 #Ejecuta el comando especificado
 
   test: #Test
     runs-on: ubuntu-latest
@@ -19,8 +19,8 @@ jobs:
     #Pasos a realizar para que build funcione
     - uses: actions/checkout@v2 #Version de gitgub action que se ocupa
     - name: Test API  #Nombre del paso en que estas
-    - uses: actions/setup-node@v2 
-    - with: 
+      uses: actions/setup-node@v2 
+      with: 
         node-version: '14.x'
     - run: npm ci 
     - run: npm test
