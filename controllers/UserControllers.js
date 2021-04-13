@@ -28,15 +28,6 @@ const findOne = async(req, res) => {
     }
 }
 
-const update = async(req, res) => {
-    try{
-        const { id } = req.params;
-        const user = await UserServices.updateUser(id);
-        return res.status(200).send(user);
-    }catch(error){
-        return res.status(400).send(error);
-    }
-}
 
 const update = async(req, res) => {
     try{
