@@ -1,6 +1,9 @@
 name: Api Mongoose v1  #Nombre de Workflow
 
-on: [push,pull_request] #Cuando se ejecuta el wokflow
+on: 
+  push: #Cuando se ejecuta el wokflow
+    branches:
+      -master
 
 jobs:
 #Stages -> Procesos de CI que realiza el workflow
@@ -10,8 +13,20 @@ jobs:
     steps:
     #Pasos a realizar para que build funcione
     - uses: actions/checkout@v2 #Version de gitgub actios que se ocupa
-    - name: Build image Docker  #Nombre del paso en que estas
-      run: docker build . --file Dockerfile --tag api-mongoose-v1 #Ejecuta el comando especificado
+    - name: Login al Heroku Registry  #Nombre del paso en que estas
+      env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login #Ejecuta el comando especificado
+    - name: Build & push de mi imagen
+      env:
+         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    - run: docker build . --tag api-mongoose-v1 -f /docker/prod/Dockerfile 
+    - run: docker tag api-mongoose-v1 registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+    - run: docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+    - name: Release
+     env:
+         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ${{ secrets.HEROKU_API_KEY }} web
 
   test: #Test
     runs-on: ubuntu-latest
