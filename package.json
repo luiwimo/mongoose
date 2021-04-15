@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --forceExit ./test"
+    "test": "jest --runInBand --forceExit ./test",
+    "start": "node server.js"
   },
   "jest":{
     "testEnvironment": "node"
